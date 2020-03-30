@@ -1,8 +1,11 @@
-const User = require('../models/user');
+const User = require('../models/user').User;
+const Token = require('../models/user').Token;
+const bcrypt = require('bcryptjs');
 
 
-const add = async function (req) {
+const add = async function (req) { 
     
+    req.password = await bcrypt.hash(req.password, 8)
     return  await User.create(req)
 
 }
@@ -32,11 +35,29 @@ const del = async function (req) {
 
 }
 
+const login = async function (req) { //password login приходит 
+    
+    
+    const user = await User.findByCredentials(req.name, req.password); //статик метод из model проверка хэша и логина
+   
+    const token = await user.generateAuthToken();  // запись токена в базу и его return 
+
+    return {user, token}
+  
+}
+const logout = async function(req){
+
+    await Token.destroy({where: {Userid: req.user.id}});
+    
+}
+
 
 module.exports = {
     add,
     get,
     update,
     del,
-    getAll
+    getAll,
+    login,
+    logout
 }

@@ -3,7 +3,7 @@ class UserController {
     constructor(){}
     addUser = async (req, res) => {
         try {
-            const result = await service.add(req.body)
+            const result = await service.add(req.body) // age password login
             res.status(201).send(result)
         } catch (e) {
             res.status(400).send({error:e.message})
@@ -38,6 +38,22 @@ class UserController {
         try {
             const result = await service.getAll()
             res.send(result)
+        } catch (e) {
+            res.status(400).send({error:e.message})
+        }
+    }
+    login = async (req, res) => {      
+        try {
+            const result = await service.login(req.body)// password + name
+            res.status(201).send(result)
+        } catch (e) {
+            res.status(400).send({error:e.message})
+        }
+    }
+    logout =  async (req, res) => {
+        try {
+            await service.logout(req)
+            res.send({responce: "successfully logout"})
         } catch (e) {
             res.status(400).send({error:e.message})
         }
