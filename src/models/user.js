@@ -1,16 +1,7 @@
 const Sequelize = require("sequelize");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-require('dotenv').config();
-//console.log(process.env.host, process.env.user, process.env.database, process.env.password)
-const sequelize = new Sequelize(process.env.database, process.env.user, process.env.password, {
-    dialect: "mysql",
-    host: process.env.host,
-    define: {
-      timestamps: false
-    }
-  });
+const sequelize = require('../config/database');
 
 const User = sequelize.define("user", {
     id: {
@@ -75,6 +66,6 @@ const User = sequelize.define("user", {
 
     return user
 }
-  sequelize.sync()
+  //sequelize.sync()
   
 module.exports = {User ,Token}

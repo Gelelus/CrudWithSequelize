@@ -3,7 +3,7 @@ const express = require('express')
 const auth = require('../middleware/auth')
 const UserController = require('../controllers/user-controller')
 const user_controller = new UserController()
-//настрока базы в models
+//настрока базы в config
 const router = new express.Router()
 
 router.delete('/:id',auth, user_controller.deleteUser)

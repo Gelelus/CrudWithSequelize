@@ -3,6 +3,7 @@
 if (localStorage.getItem('token')) {
     document.forms["authForm"].hidden = true
     document.getElementById('logoutDiv').hidden = false
+    document.getElementById('userman').innerText = localStorage.getItem('name');
 }
 
 // Получение всех пользователей
@@ -133,8 +134,11 @@ const LoginUser = async (userName, userPassword) => {
     console.log(user)
 
     if (!user.error) {
-        // console.log(user.token)
+
+        console.log(user.user.name)
+        document.getElementById('userman').innerText = user.user.name;
         localStorage.setItem('token', user.token)
+        localStorage.setItem('name', user.user.name)
         document.forms["authForm"].reset();
         document.forms["authForm"].hidden = 'true'
         document.getElementById('logoutDiv').hidden = false
@@ -157,6 +161,7 @@ const LogoutUser = async () => {
     let user = await response.json();
     console.log(user)
     localStorage.removeItem('token')
+    localStorage.removeItem('name')
     document.forms["authForm"].hidden = false
     document.getElementById('logoutDiv').hidden = true
 }
