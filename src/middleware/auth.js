@@ -1,16 +1,13 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/user').User;
+const User = require('../models/user');
 
 const auth = async (req, res, next) => {
     try{
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, 'expressapp');
-        
         const user = await User.findByPk(decoded.id);
    
-        const tokens = await user.getTokens();
-        
-        if(!tokens.some(a=>a.name === token)){
+        if(!user){
             throw new Error
         }
         req.token = token 

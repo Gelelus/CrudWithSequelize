@@ -24,28 +24,13 @@ const User = sequelize.define("user", {
     }
   });
 
-  const Token = sequelize.define("token", {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-      allowNull: false
-    },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false
-    }
-  });
  
-  User.hasMany(Token, { onDelete: "cascade" });
 
   
   User.prototype.generateAuthToken = async function () {
 
     const user = this
     const token = jwt.sign({id: user.id.toString() }, 'expressapp');
-    
-    user.createToken({name:token})
     return token
 
 }
@@ -68,4 +53,4 @@ const User = sequelize.define("user", {
 }
   //sequelize.sync()
   
-module.exports = {User ,Token}
+module.exports = User
