@@ -1,19 +1,23 @@
-const express = require('express')
+const express = require("express");
 
-const auth = require('../middleware/auth')
-const UserController = require('../controllers/user-controller')
-const user_controller = new UserController()
-//настрока базы в config
-const router = new express.Router()
+const valid = require("../middleware/validation");
+const validCreateUser = require("../dtos/create-user.dto.js");
+const validLoginUser = require("../dtos/login-user.dto.js");
 
-router.delete('/:id',auth, user_controller.deleteUser)
+const auth = require("../middleware/auth");
+const UserController = require("../controllers/user-controller");
+const user_controller = new UserController();
 
-router.post('/',user_controller.addUser)                //регистрация ++
-router.post('/login', user_controller.login)             //авторизация password/login
+const router = new express.Router();
 
-router.post('/logout',auth , user_controller.logout)     //выход 
+router.delete("/:id", auth, user_controller.deleteUser);
 
-router.put('/',auth , user_controller.updateUser)
-router.get('/:id',auth , user_controller.getUser)
-router.get('/',auth , user_controller.getAllUser)
-module.exports = router
+router.post("/", valid(validCreateUser), user_controller.addUser); //регистрация ++
+router.post("/login", valid(validLoginUser), user_controller.login); //авторизация password/login
+
+router.post("/logout", auth, user_controller.logout); //выход
+
+router.put("/", auth, user_controller.updateUser);
+router.get("/:id", auth, user_controller.getUser);
+router.get("/", auth, user_controller.getAllUser);
+module.exports = router;
