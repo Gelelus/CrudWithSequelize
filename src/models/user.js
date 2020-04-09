@@ -27,7 +27,6 @@ const User = sequelize.define("user", {
   });
 
   User.hasMany(Pet, { onDelete: "cascade" }); // создание связи один ко многим
-
   
   User.prototype.generateAuthToken = async function () {
 

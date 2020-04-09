@@ -1,5 +1,6 @@
 const sequelize = require('../config/database');
 const Sequelize = require("sequelize");
+const User = require('./user');
 
   const Pet = sequelize.define("pet", {
     id: {
@@ -14,4 +15,5 @@ const Sequelize = require("sequelize");
     }
   });
 
+  Pet.belongsTo(User);
   module.exports = Pet
