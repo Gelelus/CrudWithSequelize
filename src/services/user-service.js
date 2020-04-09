@@ -45,6 +45,22 @@ const login = async function (data) { //password login приходит
   
 }
 
+const getPets = async function (id) {
+
+    const user = await User.findByPk(id);
+    const pets = await user.getPets();
+    
+    return {user, pets}
+}
+
+const addPet = async function (data) {
+
+    const user = await User.findByPk(data.id);
+    const pet = user.createPet({name:data.name})
+    
+    return {user,pet}
+}
+
 
 
 module.exports = {
@@ -53,5 +69,7 @@ module.exports = {
     update,
     del,
     getAll,
-    login
+    login,
+    getPets,
+    addPet
 }

@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const sequelize = require('../config/database');
 
+const Pet = require('./pet')
+
 const User = sequelize.define("user", {
     id: {
       type: Sequelize.INTEGER,
@@ -24,7 +26,7 @@ const User = sequelize.define("user", {
     }
   });
 
- 
+  User.hasMany(Pet, { onDelete: "cascade" }); // создание связи один ко многим
 
   
   User.prototype.generateAuthToken = async function () {

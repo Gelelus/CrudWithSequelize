@@ -12,6 +12,9 @@ const router = new express.Router();
 
 router.delete("/:id", auth, user_controller.deleteUser);
 
+router.post("/pet", auth, user_controller.addPetToUser); // добавить питомца
+router.get("/pet/:id", auth, user_controller.getUserWithPets); // получение всех питомцов пользователя
+
 router.post("/", valid(validCreateUser), user_controller.addUser); //регистрация ++
 router.post("/login", valid(validLoginUser), user_controller.login); //авторизация password/login
 
