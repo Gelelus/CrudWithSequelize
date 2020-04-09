@@ -15,5 +15,5 @@ const User = require('./user');
     }
   });
 
-  Pet.belongsTo(User);
+ 
   module.exports = Pet
